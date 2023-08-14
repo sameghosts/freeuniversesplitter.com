@@ -77,6 +77,7 @@ export default {
 		},
 };
 
+//TODO: fetch randomness from KV store instead of API call
 async function handleGetRequest(env: Env, request: Request): Promise<Response> {
   const {searchParams} = new URL(request.url);
   let outcomes = searchParams.getAll('outcome');
@@ -118,8 +119,11 @@ async function handleGetRequest(env: Env, request: Request): Promise<Response> {
     });
   }
 }
-
+/*
+called if post, older method for UI no longer used
+ */
 async function handleRequest(env: Env, request: Request): Promise<Response> {
+//TODO:
   const qrngResult = await fetch(env.QUANTUM_NUMBERS_URL + "?length=1&type=uint16", {
     headers: {
       'x-api-key': env.QUANTUM_NUMBERS_API_KEY
