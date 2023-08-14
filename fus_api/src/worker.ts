@@ -66,8 +66,6 @@ export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
 		if (request.method === 'OPTIONS') {
 				return handleOptions(request);
-		} else if (request.method === 'POST') {
-				return handleRequest(env, request);
 		} else if (request.method === 'GET') {
 			return handleGetRequest(env, request);
 		}
