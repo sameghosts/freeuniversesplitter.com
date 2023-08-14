@@ -119,24 +119,8 @@ async function handleGetRequest(env: Env, request: Request): Promise<Response> {
     });
   }
 }
-/*
-called if post, older method for UI no longer used
- */
-async function handleRequest(env: Env, request: Request): Promise<Response> {
-//TODO:
-  const qrngResult = await fetch(env.QUANTUM_NUMBERS_URL + "?length=1&type=uint16", {
-    headers: {
-      'x-api-key': env.QUANTUM_NUMBERS_API_KEY
-    }
-  });
-  const responseHeaders = new Headers(qrngResult.headers)
-    responseHeaders.set('Access-Control-Allow-Origin', allowedOrigin)
-    return new Response(qrngResult.body, {
-        headers: responseHeaders,
-        status: qrngResult.status,
-        statusText: qrngResult.statusText
-    })
-}
+
+
 
 function handleOptions(request: Request): Response {
     const respHeaders = {
