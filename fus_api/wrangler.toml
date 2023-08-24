@@ -1,5 +1,5 @@
 name = "fus_api"
-main = "src/crontrigger.ts"
+main = "src/worker.ts"
 compatibility_date = "2023-08-07"
 
 # Variable bindings. These are arbitrary, plaintext strings (similar to environment variables)
@@ -51,6 +51,3 @@ kv_namespaces = [ { binding = "batchQRandmoness", id = "98ab897f5b444f068ca80f7c
 # [[migrations]]
 # tag = "v1"
 # new_classes = ["MyDurableObject"]
-
-[triggers]
-crons = ["0 * * * *"]

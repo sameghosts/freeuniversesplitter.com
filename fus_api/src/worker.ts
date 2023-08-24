@@ -11,6 +11,7 @@
 export interface Env {
 	QUANTUM_NUMBERS_API_KEY: string;
 	QUANTUM_NUMBERS_URL: string;
+	QRANDOMNESS_KV: KVNamespace;
 	// Example binding to KV. Learn more at https://developers.cloudflare.com/workers/runtime-apis/kv/
 	// MY_KV_NAMESPACE: KVNamespace;
 	//
@@ -88,7 +89,7 @@ async function handleGetRequest(env: Env, request: Request): Promise<Response> {
   if (outcomes.length === 0) {
     outcomes = defaultOutcomes;
   }
-  const qrngResult = await fetch(env.QUANTUM_NUMBERS_URL + "?length=1&type=uint16", {
+  const qrngResult = await fetch(env.QUANTUM_NUMBERS_URL + "?length=10&type=hex16&size=10", {
     headers: {
       'x-api-key': env.QUANTUM_NUMBERS_API_KEY
     }
@@ -104,7 +105,22 @@ async function handleGetRequest(env: Env, request: Request): Promise<Response> {
   } else {
 		//TODO: Properly type json
     const json: any = await qrngResult.json();
-    const randNum = json.data[0];
+		//TODO: Get KV namesapce put working
+
+		console.log(json.data)
+		//kv namespace fail
+		// const KVPUT = await env.QRANDOMNESS_KV.put("qRandomness", JSON.stringify(json.data));
+		// console.log(KVPUT)
+		// await env.QRANDOMNESS_KV.put("qRandomness", JSON.stringify(json.data));
+
+		//? randNum as single data point for uint grab
+		// const randNum = json.data[0]
+		//? randNum attempt from hex call
+    // const randNum = parseInt(JSON.stringify(json.data[0]), 16);
+		const randNum = parseInt(json.data[0], 16)
+
+		console.log(randNum)
+
     const selectedOutcome = outcomes[randNum % outcomes.length];
     const p = 1.0/outcomes.length;
     const responseHeaders = new Headers();
